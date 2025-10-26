@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affiliate Dashboard - SorvexWebsite</title>
+    <meta name="description" content="Your affiliate dashboard - track earnings, referrals, and manage your discount codes.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #06d6a0;
+            --dark: #0a0a0a;
+            --light: #ffffff;
+            --text: #ffffff;
+            --text-light: #a1a1aa;
+            --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06d6a0 100%);
+            --shadow: 0 25px 50px rgba(0,0,0,0.25);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            background: var(--gradient);
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            border: 2px solid transparent;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+
+        /* Dashboard Content */
+        .dashboard {
+            padding-top: 120px;
+            min-height: 100vh;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .dashboard-header p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            color: var(--light);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Discount Code Section */
+        .discount-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .discount-section h3 {
+            color: var(--text);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .discount-code {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--primary);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .discount-code-text {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .discount-code-label {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .copy-btn {
+            background: var(--gradient);
+            color: var(--light);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .copy-btn:active {
+            transform: translateY(0) scale(0.95);
+            transition: all 0.1s ease;
+        }
+
+        .share-btn {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .share-btn:hover {
+            background: var(--primary);
+            color: var(--light);
+        }
+
+        /* Referral Link */
+
+        /* Recent Sales */
+        .recent-sales {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .recent-sales h3 {
+            color: var(--text);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sales-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .sales-table th,
+        .sales-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sales-table th {
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .sales-table td {
+            color: var(--text);
+        }
+
+        /* Login Form */
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .login-btn {
+            width: 100%;
+            background: var(--gradient);
+            color: var(--light);
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Success/Error Messages */
+        .message {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .message.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .message.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .dashboard-header h1 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .stat-card {
+                padding: 1.5rem;
+            }
+
+            .discount-code-text {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <i class="fas fa-code"></i> SorvexWebsite
+                </div>
+                
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                </ul>
+                
+            </nav>
+        </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard">
+        <div class="container">
+            <!-- Login Form (shown when not logged in) -->
+            <div id="loginSection" class="login-form" style="display: none;">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text);">Affiliate Login</h2>
+                <div id="loginMessage" class="message"></div>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    
+                    <button type="submit" class="login-btn">Login to Dashboard</button>
+                </form>
+            </div>
+
+            <!-- Dashboard Content (shown when logged in) -->
+            <div id="dashboardContent" style="display: none;">
+                <div class="dashboard-header">
+                    <h1>Welcome to Your Dashboard</h1>
+                    <p>Track your earnings, referrals, and manage your discount codes</p>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-number" id="totalEarnings">$0.00</div>
+                        <div class="stat-label">Total Earnings</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="stat-number" id="totalSales">0</div>
+                        <div class="stat-label">Total Sales</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-number" id="totalRecruits">0</div>
+                        <div class="stat-label">Total Recruits</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="stat-number" id="conversionRate">0%</div>
+                        <div class="stat-label">Conversion Rate</div>
+                    </div>
+                </div>
+
+                <!-- Discount Code Section -->
+                <div class="discount-section">
+                    <h3><i class="fas fa-tag"></i> Your Discount Code</h3>
+                    <div class="discount-code">
+                        <div class="discount-code-text" id="discountCode">LOADING...</div>
+                        <div class="discount-code-label">Share this code with your customers for 10% discount</div>
+                    </div>
+                    
+                    <button class="copy-btn" onclick="copyDiscountCode()">
+                        <i class="fas fa-copy"></i> Copy Code
+                    </button>
+                    
+                    <button class="share-btn" onclick="shareDiscountCode()">
+                        <i class="fas fa-share"></i> Share Code
+                    </button>
+                </div>
+
+
+                <!-- Recent Sales -->
+                <div class="recent-sales">
+                    <h3><i class="fas fa-chart-line"></i> Recent Sales</h3>
+                    <table class="sales-table">
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Amount</th>
+                                <th>Discount</th>
+                                <th>Commission</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="salesTableBody">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: var(--text-light);">No sales yet</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Production API URL - CHANGE THIS TO YOUR BACKEND DOMAIN
+        const API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:3000' : 'https://YOUR-RAILWAY-APP-NAME.railway.app';
+        let currentUser = null;
+
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', () => {
+            // Generate discount code when dashboard loads
+            setTimeout(() => {
+                generateDiscountCode();
+            }, 1000);
+            
+            // Check if we have user data from registration
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('user_id');
+            const userEmail = urlParams.get('email');
+            const discountCode = urlParams.get('discount_code');
+            
+            if (userId && userEmail && discountCode) {
+                // Auto-login with registration data
+                currentUser = {
+                    id: userId,
+                    email: userEmail,
+                    discountCode: discountCode
+                };
+                showDashboard();
+                loadDashboardData();
+            } else {
+                // Check localStorage for affiliate status
+                const affiliateData = localStorage.getItem('affiliateData');
+                
+                if (affiliateData) {
+                    try {
+                        const data = JSON.parse(affiliateData);
+                        if (data.isAffiliate && data.userId) {
+                            // User is already an affiliate, auto-login
+                            currentUser = {
+                                id: data.userId,
+                                email: data.email,
+                                discountCode: data.discountCode
+                            };
+                            showDashboard();
+                            loadDashboardData();
+                            return;
+                        }
+                    } catch (error) {
+                        console.error('Error parsing affiliate data:', error);
+                    }
+                }
+
+                // Check cookies for affiliate status
+                const affiliateCookie = getCookie('affiliate_user');
+                if (affiliateCookie) {
+                    try {
+                        const cookieData = JSON.parse(decodeURIComponent(affiliateCookie));
+                        if (cookieData.isAffiliate && cookieData.userId) {
+                            // User is already an affiliate, auto-login
+                            currentUser = {
+                                id: cookieData.userId,
+                                email: cookieData.email,
+                                discountCode: cookieData.discountCode
+                            };
+                            showDashboard();
+                            loadDashboardData();
+                            return;
+                        }
+                    } catch (error) {
+                        console.error('Error parsing affiliate cookie:', error);
+                    }
+                }
+
+                // If no affiliate data found, show login form
+                showLoginForm();
+            }
+            
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
+
+        async function checkAuthStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/me`, {
+                    credentials: 'include'
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    currentUser = data.user;
+                    showDashboard();
+                    loadDashboardData();
+                } else {
+                    showLoginForm();
+                }
+            } catch (error) {
+                console.error('Auth check error:', error);
+                showLoginForm();
+            }
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch(`${API_BASE}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    currentUser = data.user;
+                    showDashboard();
+                    loadDashboardData();
+                    showMessage('success', 'Login successful!');
+                } else {
+                    const error = await response.json();
+                    showMessage('error', error.error || 'Login failed');
+                }
+            } catch (error) {
+                showMessage('error', 'Login error: ' + error.message);
+            }
+        }
+
+        function showLoginForm() {
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('dashboardContent').style.display = 'none';
+        }
+
+        function showDashboard() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('dashboardContent').style.display = 'block';
+        }
+
+        async function loadDashboardData() {
+            if (!currentUser) return;
+
+            try {
+                // Try to get real data from server
+                const response = await fetch(`${API_BASE}/affiliate/${currentUser.id}/dashboard`, {
+                    credentials: 'include'
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    updateDashboard(data);
+                } else {
+                    // If no server data, show empty dashboard for new user
+                    showEmptyDashboard();
+                }
+            } catch (error) {
+                console.error('Dashboard load error:', error);
+                // Show empty dashboard for new user
+                showEmptyDashboard();
+            }
+        }
+
+        function showEmptyDashboard() {
+            // Update dashboard with empty data for new user
+            document.getElementById('totalEarnings').textContent = '$0.00';
+            document.getElementById('totalSales').textContent = '0';
+            document.getElementById('totalRecruits').textContent = '0';
+            document.getElementById('conversionRate').textContent = '0%';
+            
+            // Update discount code
+            document.getElementById('discountCode').textContent = currentUser.discountCode || 'N/A';
+            
+            // Show empty sales table
+            updateSalesTable([]);
+        }
+
+        function updateDashboard(data) {
+            // Update stats
+            document.getElementById('totalEarnings').textContent = `$${data.affiliate.totalEarnings.toFixed(2)}`;
+            document.getElementById('totalSales').textContent = data.affiliate.totalSales;
+            document.getElementById('totalRecruits').textContent = data.affiliate.totalRecruits;
+            
+            // Calculate conversion rate
+            const conversionRate = data.affiliate.totalSales > 0 ? 
+                ((data.affiliate.totalSales / (data.affiliate.totalSales + 10)) * 100).toFixed(1) : 0;
+            document.getElementById('conversionRate').textContent = `${conversionRate}%`;
+
+            // Update discount code
+            document.getElementById('discountCode').textContent = data.affiliate.discountCode || 'N/A';
+
+            // Update sales table
+            updateSalesTable(data.recentSales || []);
+            
+            // Simple affiliate system - no recruits table needed
+        }
+
+        function updateSalesTable(sales) {
+            const tbody = document.getElementById('salesTableBody');
+            tbody.innerHTML = '';
+
+            if (sales.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-light);">No sales yet</td></tr>';
+                return;
+            }
+
+            sales.forEach(sale => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${sale.customerEmail}</td>
+                    <td>$${sale.amount.toFixed(2)}</td>
+                    <td>$${sale.discountAmount.toFixed(2)}</td>
+                    <td>$${sale.affiliateCommission.toFixed(2)}</td>
+                    <td>${new Date(sale.createdAt).toLocaleDateString()}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Simple discount code system - no referral links
+        function generateDiscountCode() {
+            if (!currentUser || !currentUser.discountCode) return;
+            
+            // Update discount code display
+            document.getElementById('discountCode').textContent = currentUser.discountCode;
+        }
+
+
+        function copyDiscountCode() {
+            const code = document.getElementById('discountCode').textContent;
+            const copyBtn = document.querySelector('.copy-btn');
+            
+            navigator.clipboard.writeText(code).then(() => {
+                // Show subtle feedback next to button
+                showCopyFeedback(copyBtn);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = code;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showCopyFeedback(copyBtn);
+            });
+        }
+
+        function showCopyFeedback(button) {
+            // Store original button content
+            const originalContent = button.innerHTML;
+            
+            // Change button content to show checkmark
+            button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+            
+            // Add CSS animation
+            if (!document.getElementById('checkmark-styles')) {
+                const style = document.createElement('style');
+                style.id = 'checkmark-styles';
+                style.textContent = `
+                    @keyframes buttonSuccess {
+                        0% { 
+                            transform: scale(1); 
+                        }
+                        50% { 
+                            transform: scale(1.05); 
+                        }
+                        100% { 
+                            transform: scale(1); 
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // Add animation to button
+            button.style.animation = 'buttonSuccess 0.3s ease';
+            
+            // Reset button after 1.5 seconds
+            setTimeout(() => {
+                button.innerHTML = originalContent;
+                button.style.background = '';
+                button.style.animation = '';
+            }, 1500);
+        }
+
+
+        function shareDiscountCode() {
+            const code = document.getElementById('discountCode').textContent;
+            const text = `Get 10% off on SorvexWebsite services! Use discount code: ${code}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'SorvexWebsite Discount',
+                    text: text,
+                    url: window.location.origin
+                });
+            } else {
+                navigator.clipboard.writeText(text);
+                showMessage('success', 'Share text copied to clipboard!');
+            }
+        }
+
+
+
+        function showMessage(type, text) {
+            const messageDiv = document.getElementById('loginMessage');
+            messageDiv.className = `message ${type}`;
+            messageDiv.textContent = text;
+            messageDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

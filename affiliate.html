@@ -1,0 +1,2157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; img-src 'self' data: blob: https:; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;">
+    <title>Affiliate Program - SorvexWebsite</title>
+    <meta name="description" content="Join our affiliate program and earn up to 30% commission promoting our web development services.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #06d6a0;
+            --accent-orange: #ff6b6b;
+            --dark: #0a0a0a;
+            --dark-secondary: #1a1a1a;
+            --dark-tertiary: #2a2a2a;
+            --light: #ffffff;
+            --text: #ffffff;
+            --text-light: #a1a1aa;
+            --text-dark: #27272a;
+            --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06d6a0 100%);
+            --gradient-dark: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            --shadow: 0 25px 50px rgba(0,0,0,0.25);
+            --shadow-lg: 0 35px 60px rgba(0,0,0,0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--gradient-dark);
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(6, 214, 160, 0.1) 0%, transparent 50%);
+            animation: backgroundShift 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: floatParticle 8s ease-in-out infinite;
+        }
+
+        @keyframes floatParticle {
+            0%, 100% { 
+                transform: translateY(0px) translateX(0px) rotate(0deg); 
+                opacity: 0; 
+            }
+            10%, 90% { 
+                opacity: 1; 
+            }
+            50% { 
+                transform: translateY(-100px) translateX(50px) rotate(180deg); 
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+            text-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: var(--gradient);
+            color: var(--light);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-btn:hover::before {
+            left: 100%;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 30px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .mobile-menu-btn span {
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+            box-shadow: 0 2px 5px rgba(99, 102, 241, 0.3);
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 150px;
+            padding-bottom: 20px;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 50px rgba(99, 102, 241, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: var(--light);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary.affiliate-submit {
+            width: 100%;
+            justify-content: center;
+            margin-top: -80px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06d6a0 100%) !important;
+            color: white !important;
+            border: 2px solid #6366f1 !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            padding: 1.5rem 3rem !important;
+            font-size: 1.2rem !important;
+            font-weight: 700 !important;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary.affiliate-submit:hover {
+            background: linear-gradient(135deg, #5b5cf0 0%, #7a4cf5 50%, #05c690 100%) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+        }
+
+        /* Affiliate Section */
+        .affiliate {
+            padding: 2rem 0 6rem 0;
+            background: transparent;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 4rem;
+        }
+
+        .affiliate-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 4rem;
+        }
+
+        .affiliate-benefits h3,
+        .commission-structure h3 {
+            color: var(--text);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .benefit-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: var(--light);
+        }
+
+        .benefit-card h4 {
+            color: var(--text);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .benefit-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .commission-table {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .commission-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            align-items: center;
+        }
+
+        .commission-row:last-child {
+            border-bottom: none;
+        }
+
+        .package-name {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .commission-rate {
+            color: var(--accent);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .commission-amount {
+            color: var(--primary);
+            font-weight: 700;
+            text-align: right;
+        }
+
+        .affiliate-form-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            padding-bottom: 3rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .affiliate-form h3 {
+            color: var(--text);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .affiliate-form p {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 1rem;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+        }
+
+        .form-group select option {
+            background: var(--dark-secondary);
+            color: var(--text);
+            padding: 10px;
+        }
+
+        .affiliate-dashboard-preview {
+            margin-top: 4rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .affiliate-dashboard-preview h3 {
+            color: var(--text);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--light);
+        }
+
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-number {
+            color: var(--text);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .affiliate-terms {
+            margin-top: 4rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .affiliate-terms h3 {
+            color: var(--text);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .terms-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .terms-section {
+            margin-bottom: 2rem;
+        }
+
+        .terms-section h4 {
+            color: var(--primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .terms-section p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Mouse Trail Effect */
+        .mouse-trail {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.8) 0%, rgba(139, 92, 246, 0.4) 50%, transparent 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: screen;
+            animation: trailFade 0.6s ease-out forwards;
+        }
+
+        @keyframes trailFade {
+            0% {
+                opacity: 1;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.5);
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: var(--light);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .footer-section a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        /* Mobile-First Responsive Design */
+        @media (max-width: 768px) {
+            /* Global Mobile Styles */
+            * {
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-size: 16px;
+                line-height: 1.6;
+            }
+            
+            .container {
+                padding: 0 1rem;
+                max-width: 100%;
+            }
+
+            /* Header Mobile - Ultra kompaktan */
+            .header {
+                padding: 0.4rem 0;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+                background: rgba(10, 10, 10, 0.95);
+                backdrop-filter: blur(10px);
+            }
+            
+            .nav {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                padding: 0 0.5rem;
+            }
+            
+            .logo {
+                font-size: 1.3rem;
+                font-weight: 700;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+                z-index: 1001;
+                width: 22px;
+                height: 22px;
+            }
+            
+            .mobile-menu-btn span {
+                height: 2px;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: linear-gradient(135deg, rgba(5, 5, 15, 0.98) 0%, rgba(15, 15, 35, 0.95) 50%, rgba(25, 25, 45, 0.92) 100%);
+                backdrop-filter: blur(25px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 1.5rem;
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 1000;
+                padding: 3rem 2rem;
+                border-right: 2px solid rgba(99, 102, 241, 0.3);
+                box-shadow: inset -10px 0 30px rgba(99, 102, 241, 0.1);
+            }
+            
+            .nav-links.active {
+                left: 0;
+                box-shadow: 0 0 60px rgba(99, 102, 241, 0.4), inset -10px 0 30px rgba(99, 102, 241, 0.1);
+            }
+            
+            .nav-links li {
+                text-align: center;
+                width: 100%;
+                opacity: 0;
+                transform: translateX(-80px) scale(0.8);
+                animation: slideInFromLeft 0.8s ease forwards;
+            }
+            
+            .nav-links.active li {
+                animation: slideInFromLeft 0.8s ease forwards;
+            }
+            
+            .nav-links.active li:nth-child(1) { animation-delay: 0.1s; }
+            .nav-links.active li:nth-child(2) { animation-delay: 0.2s; }
+            .nav-links.active li:nth-child(3) { animation-delay: 0.3s; }
+            .nav-links.active li:nth-child(4) { animation-delay: 0.4s; }
+            .nav-links.active li:nth-child(5) { animation-delay: 0.5s; }
+            
+            .nav-links a {
+                padding: 1.5rem 2.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 1rem;
+                border-radius: 20px;
+                background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%);
+                border: 2px solid rgba(99, 102, 241, 0.15);
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                font-size: 1.3rem;
+                font-weight: 600;
+                width: 100%;
+                text-align: left;
+                position: relative;
+                overflow: hidden;
+                backdrop-filter: blur(10px);
+            }
+            
+            .nav-links a i {
+                font-size: 1.5rem;
+                width: 30px;
+                text-align: center;
+                color: rgba(99, 102, 241, 0.8);
+                transition: all 0.3s ease;
+            }
+            
+            .nav-links a span {
+                flex: 1;
+                transition: all 0.3s ease;
+            }
+            
+            .nav-links a::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+                transition: left 0.6s ease;
+            }
+            
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                right: 1rem;
+                transform: translateY(-50%);
+                width: 0;
+                height: 2px;
+                background: linear-gradient(90deg, #6366f1, #8b5cf6);
+                transition: width 0.3s ease;
+            }
+            
+            .nav-links a:hover {
+                background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+                transform: translateY(-5px) scale(1.03);
+                box-shadow: 0 15px 35px rgba(99, 102, 241, 0.25);
+                border-color: rgba(99, 102, 241, 0.3);
+            }
+            
+            .nav-links a:hover i {
+                color: #6366f1;
+                transform: scale(1.2);
+            }
+            
+            .nav-links a:hover span {
+                transform: translateX(5px);
+            }
+            
+            .nav-links a:hover::before {
+                left: 100%;
+            }
+            
+            .nav-links a:hover::after {
+                width: 30px;
+            }
+            
+            .nav-links a.active {
+                background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+                color: white;
+                box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+            
+            .nav-links a.active i {
+                color: white;
+                transform: scale(1.1);
+            }
+            
+            @keyframes slideInFromLeft {
+                to {
+                    opacity: 1;
+                    transform: translateX(0) scale(1);
+                }
+            }
+            
+            .cta-btn {
+                display: none;
+            }
+
+            /* Hero Mobile - Povećan */
+            .hero {
+                padding: 2.5rem 0.75rem 2rem 0.75rem;
+                text-align: center;
+                min-height: 50vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 2.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+                line-height: 1.2;
+                margin-bottom: 0.75rem;
+                font-weight: 800;
+            }
+            
+            .hero p {
+                font-size: 0.95rem;
+                margin-bottom: 1.5rem;
+                line-height: 1.4;
+                color: var(--text-light);
+            }
+            
+            .hero .btn-primary {
+                padding: 0.8rem 1.75rem;
+                font-size: 0.95rem;
+                font-weight: 600;
+                border-radius: 10px;
+            }
+
+            /* Affiliate Section Mobile - Bez razmaka */
+            .affiliate {
+                padding: 0 0.75rem !important;
+                margin-top: -3rem !important;
+            }
+            
+            .affiliate-content {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            
+            /* Dodatne optimizacije za uklanjanje razmaka */
+            .hero {
+                margin-bottom: -2rem !important;
+            }
+            
+            .section-title {
+                margin-top: 0 !important;
+                margin-bottom: 0.5rem !important;
+            }
+
+            /* Benefits Mobile - Ultra kompaktan */
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            
+            .benefit-card {
+                padding: 0.75rem;
+                text-align: center;
+                border-radius: 8px;
+            }
+            
+            .benefit-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
+                margin: 0 auto 0.4rem auto;
+            }
+            
+            .benefit-card h3 {
+                font-size: 0.9rem;
+                margin-bottom: 0.3rem;
+            }
+            
+            .benefit-card p {
+                font-size: 0.75rem;
+                line-height: 1.2;
+            }
+
+            /* Commission Structure Mobile - Ultra kompaktan */
+            .commission-row {
+                grid-template-columns: 1fr;
+                gap: 0.4rem;
+                text-align: center;
+                padding: 0.75rem;
+                border-radius: 8px;
+            }
+            
+            .commission-rate,
+            .commission-amount {
+                text-align: center;
+                padding: 0.6rem;
+            }
+            
+            .commission-rate h3 {
+                font-size: 1rem;
+            }
+            
+            .commission-amount h3 {
+                font-size: 1rem;
+            }
+
+            /* Dashboard Preview Mobile - Ultra kompaktan */
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+                gap: 0.4rem;
+            }
+            
+            .stat-card {
+                padding: 0.75rem;
+                text-align: center;
+                border-radius: 8px;
+            }
+            
+            .stat-number {
+                font-size: 1.3rem;
+                margin-bottom: 0.25rem;
+            }
+            
+            .stat-label {
+                font-size: 0.75rem;
+            }
+
+            /* Form Mobile - Ultra kompaktan */
+            .affiliate-form-container {
+                padding: 0.75rem;
+                padding-bottom: 3rem;
+                border-radius: 8px;
+                position: relative;
+            }
+            
+            .form-group {
+                margin-bottom: 0.7rem;
+            }
+            
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                padding: 0.65rem;
+                font-size: 16px;
+                border-radius: 6px;
+                border: 2px solid rgba(255, 255, 255, 0.1);
+                background: rgba(255, 255, 255, 0.05);
+                color: var(--text);
+                width: 100%;
+            }
+            
+            .form-group input:focus,
+            .form-group select:focus,
+            .form-group textarea:focus {
+                border-color: var(--primary);
+                outline: none;
+                background: rgba(255, 255, 255, 0.1);
+            }
+            
+            .form-group label {
+                display: block;
+                margin-bottom: 0.25rem;
+                font-weight: 600;
+                color: var(--text);
+                font-size: 0.8rem;
+            }
+            
+            .btn-primary.affiliate-submit {
+                width: 90% !important;
+                padding: 0.46rem 0.8rem !important;
+                font-size: 0.9rem !important;
+                font-weight: 600 !important;
+                border-radius: 6px !important;
+                min-height: 37px !important;
+                margin-top: 1.5rem !important;
+                position: absolute !important;
+                bottom: 0.75rem !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+            }
+
+            /* Footer Mobile - Još kompaktniji */
+            .footer {
+                padding: 0.75rem 1rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+                text-align: center;
+            }
+            
+            .footer-section h3 {
+                font-size: 0.9rem;
+                margin-bottom: 0.4rem;
+                font-weight: 600;
+            }
+            
+            .footer-section p,
+            .footer-section a {
+                font-size: 0.75rem;
+                line-height: 1.3;
+            }
+            
+            .footer-section ul {
+                gap: 0.3rem;
+            }
+            
+            .footer-section li {
+                margin-bottom: 0.2rem;
+                font-size: 0.7rem;
+            }
+            
+            /* Smanji copyright sekciju */
+            .footer > div:last-child {
+                padding-top: 0.5rem;
+                margin-top: 0.5rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                font-size: 0.65rem;
+            }
+
+            /* Mouse Trail Mobile - Prikaži na mobile */
+            .mouse-trail {
+                display: block;
+            }
+
+            /* Touch-friendly buttons */
+            .btn, .cta-btn, .mobile-menu-btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+
+            /* Card hover effects disabled on mobile */
+            .benefit-card:hover,
+            .stat-card:hover {
+                transform: none;
+            }
+            
+            /* Smooth scrolling */
+            html {
+                scroll-behavior: smooth;
+            }
+            
+            /* Better spacing - Ultra kompaktan */
+            section {
+                margin: 0;
+                padding: 0.75rem 0;
+            }
+            
+            /* Dodatne optimizacije za maksimalnu kompaktnost */
+            .affiliate-content h3 {
+                font-size: 1.1rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .affiliate-content p {
+                font-size: 0.8rem;
+                line-height: 1.3;
+                margin-bottom: 0.5rem;
+            }
+            
+            /* Smanji margin između sekcija */
+            .affiliate-content .benefits-section,
+            .affiliate-content .commission-section,
+            .affiliate-content .dashboard-section,
+            .affiliate-content .form-section {
+                margin-bottom: 0.75rem;
+            }
+            
+            /* Optimizuj dashboard preview tekst */
+            .dashboard-preview p {
+                font-size: 0.75rem;
+                margin-bottom: 0.5rem;
+                font-style: italic;
+            }
+        }
+
+        /* Extra Small Mobile */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 0.5rem;
+            }
+            
+            .hero {
+                padding: 2rem 0.5rem 1.5rem 0.5rem;
+                min-height: 45vh;
+                margin-top: 2rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.5rem;
+                line-height: 1.2;
+                margin-bottom: 0.6rem;
+            }
+            
+            .hero p {
+                font-size: 0.85rem;
+                margin-bottom: 1.25rem;
+                line-height: 1.3;
+            }
+            
+            .hero .btn-primary {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.85rem;
+            }
+            
+            .affiliate {
+                padding: 0 0.5rem !important;
+                margin-top: -4rem !important;
+            }
+            
+            .section-title {
+                font-size: 1.1rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .benefit-card,
+            .stat-card {
+                padding: 0.6rem;
+            }
+            
+            .benefit-icon {
+                width: 25px;
+                height: 25px;
+                font-size: 0.8rem;
+            }
+            
+            .benefit-card h3 {
+                font-size: 0.85rem;
+            }
+            
+            .benefit-card p {
+                font-size: 0.7rem;
+            }
+            
+            .commission-row {
+                padding: 0.6rem;
+            }
+            
+            .commission-rate h3,
+            .commission-amount h3 {
+                font-size: 0.9rem;
+            }
+            
+            .stat-number {
+                font-size: 1.2rem;
+            }
+            
+            .stat-label {
+                font-size: 0.7rem;
+            }
+            
+            .affiliate-form-container {
+                padding: 0.6rem;
+                padding-bottom: 2.5rem;
+                position: relative;
+            }
+            
+            .form-group {
+                margin-bottom: 0.6rem;
+            }
+            
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                padding: 0.6rem;
+                font-size: 16px;
+            }
+            
+            .form-group label {
+                font-size: 0.75rem;
+                margin-bottom: 0.2rem;
+            }
+            
+            .btn-primary.affiliate-submit {
+                padding: 0.4rem 0.7rem !important;
+                font-size: 0.8rem !important;
+                min-height: 35px !important;
+                margin-top: 1.2rem !important;
+                position: absolute !important;
+                bottom: 0.6rem !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                width: 85% !important;
+            }
+            
+            .footer {
+                padding: 0.4rem 0.5rem;
+            }
+            
+            .footer-section h3 {
+                font-size: 0.8rem;
+            }
+            
+            .footer-section p,
+            .footer-section a {
+                font-size: 0.65rem;
+            }
+            
+            .footer-section li {
+                font-size: 0.65rem;
+            }
+            
+            .footer-bottom {
+                font-size: 0.6rem;
+            }
+            
+            .nav-links a {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            .logo {
+                font-size: 1.1rem;
+            }
+            
+            .commission-rate h3,
+            .commission-amount h3 {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Ensure content is visible by default */
+        .benefit-card,
+        .stat-card {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+    </style>
+    <script src="affiliate-integration.js"></script>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <i class="fas fa-code"></i> SorvexWebsite
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html"><i class="fas fa-home"></i><span>Home</span></a></li>
+                    <li><a href="index.html#features"><i class="fas fa-star"></i><span>Features</span></a></li>
+                    <li><a href="index.html#services"><i class="fas fa-cogs"></i><span>Services</span></a></li>
+                    <li><a href="affiliate.html" class="active"><i class="fas fa-handshake"></i><span>Affiliate</span></a></li>
+                    <li><a href="index.html#contact"><i class="fas fa-envelope"></i><span>Contact</span></a></li>
+                </ul>
+                <a href="index.html#contact" class="cta-btn">Get Quote</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Join Our Affiliate Program</h1>
+                <p>Earn 20% commission by sharing your discount code. Customers get 10% off when they use your code!</p>
+                <a href="#affiliate-form" class="btn-primary">
+                    Join Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Affiliate Program Section -->
+    <section id="affiliate" class="affiliate">
+        <div class="container">
+            <h2 class="section-title">Discount Code Affiliate Program</h2>
+            <p class="section-subtitle">Share your discount code and earn 20% commission when customers use it!</p>
+            
+            <div class="affiliate-content">
+                <div class="affiliate-info">
+                    <div class="affiliate-benefits">
+                        <h3>Program Benefits</h3>
+                        <div class="benefits-grid">
+                            <div class="benefit-card">
+                                <div class="benefit-icon">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <h4>20% Commission</h4>
+                                <p>Earn 20% commission on every successful referral</p>
+                            </div>
+                            
+                            <div class="benefit-card">
+                                <div class="benefit-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h4>Real-time Tracking</h4>
+                                <p>Track your referrals and earnings in real-time dashboard</p>
+                            </div>
+                            
+                            <div class="benefit-card">
+                                <div class="benefit-icon">
+                                    <i class="fas fa-tag"></i>
+                                </div>
+                                <h4>Unique Discount Codes</h4>
+                                <p>Get your unique discount code to share with customers</p>
+                            </div>
+                            
+                            <div class="benefit-card">
+                                <div class="benefit-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <h4>Fast Payouts</h4>
+                                <p>Get paid within 7 days after project completion</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="commission-structure">
+                        <h3>Commission Structure</h3>
+                        <div class="commission-table">
+                            <div class="commission-row">
+                                <span class="package-name">Starter Pack</span>
+                                <span class="commission-rate">20% Commission</span>
+                                <span class="commission-amount">$20 - $30</span>
+                            </div>
+                            <div class="commission-row">
+                                <span class="package-name">Growth Pro</span>
+                                <span class="commission-rate">20% Commission</span>
+                                <span class="commission-amount">$30 - $60</span>
+                            </div>
+                            <div class="commission-row">
+                                <span class="package-name">Enterprise Elite</span>
+                                <span class="commission-rate">20% Commission</span>
+                                <span class="commission-amount">$60 - $100</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="affiliate-form-container" id="affiliate-form">
+                    <div class="affiliate-form">
+                        <h3>Join Our Affiliate Program</h3>
+                        <p>Fill out the form below to start earning commissions</p>
+                        
+                        <form class="affiliate-signup-form">
+                            <div class="form-group">
+                                <label for="affiliate-name">Full Name *</label>
+                                <input type="text" id="affiliate-name" name="name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="affiliate-email">Email Address *</label>
+                                <input type="email" id="affiliate-email" name="email" required>
+                            </div>
+                            
+                            <!-- Password will be auto-generated -->
+                            <input type="hidden" id="affiliate-password" name="password" value="auto-generated">
+                            
+                            <div class="form-group">
+                                <label for="affiliate-website">Website/Blog URL</label>
+                                <input type="text" id="affiliate-website" name="website" placeholder="yourwebsite.com or https://yourwebsite.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="affiliate-social">Social Media Profiles</label>
+                                <input type="text" id="affiliate-social" name="social" placeholder="Instagram, Facebook, LinkedIn handles">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="affiliate-experience">Marketing Experience</label>
+                                <select id="affiliate-experience" name="experience" required>
+                                    <option value="" disabled selected>Select your experience level</option>
+                                    <option value="beginner">Beginner (0-1 year)</option>
+                                    <option value="intermediate">Intermediate (1-3 years)</option>
+                                    <option value="advanced">Advanced (3+ years)</option>
+                                    <option value="expert">Expert (5+ years)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="affiliate-message">Tell us about yourself</label>
+                                <textarea id="affiliate-message" name="message" rows="4" placeholder="How do you plan to promote our services? What's your audience like?"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn-primary affiliate-submit">
+                                Join Affiliate Program
+                            </button>
+                            
+                            <div style="text-align: center; margin-top: 1rem;">
+                                <p style="color: var(--text-light); font-size: 0.9rem;">
+                                    Already have an account? 
+                                    <a href="affiliate-dashboard.html" style="color: var(--primary); text-decoration: none; font-weight: 600;">
+                                        Login to Dashboard
+                                    </a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Affiliate Dashboard Preview -->
+            <div class="affiliate-dashboard-preview">
+                <h3>Your Affiliate Dashboard</h3>
+                <p style="text-align: center; color: var(--text-light); margin-bottom: 2rem; font-style: italic;">This is how your dashboard will look</p>
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number">1,247</span>
+                            <span class="stat-label">Link Clicks</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-mouse-pointer"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number">23</span>
+                            <span class="stat-label">Conversions</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number">$1,260</span>
+                            <span class="stat-label">Total Earnings</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number">1.8%</span>
+                            <span class="stat-label">Conversion Rate</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Affiliate Terms -->
+            <div id="affiliate-terms" class="affiliate-terms">
+                <h3>Affiliate Program Terms & Conditions</h3>
+                <div class="terms-content">
+                    <div class="terms-section">
+                        <h4>1. Program Overview</h4>
+                        <p>Our discount code affiliate program allows you to earn commissions by sharing your unique discount code. Customers get 10% off when they use your code, and you earn 20% commission.</p>
+                    </div>
+                    
+                    <div class="terms-section">
+                        <h4>2. Commission Structure</h4>
+                        <p>Commissions are paid at 20% for all packages (Starter Pack, Growth Pro, and Enterprise Elite). Commissions are calculated on the final project value after completion.</p>
+                    </div>
+                    
+                    <div class="terms-section">
+                        <h4>3. Payment Terms</h4>
+                        <p>Payments are made within 7 days after project completion and client payment. Minimum payout is $50. Payments are made via PayPal or bank transfer.</p>
+                    </div>
+                    
+                    <div class="terms-section">
+                        <h4>4. Discount Code Tracking</h4>
+                        <p>All purchases using your discount code are tracked automatically. You'll have access to real-time reporting and analytics through your affiliate dashboard.</p>
+                    </div>
+                    
+                    <div class="terms-section">
+                        <h4>5. Marketing Guidelines</h4>
+                        <p>You must use approved marketing materials and cannot make false claims about our services. All promotional content must be truthful and professional.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SorvexWebsite</h3>
+                    <p>Professional web development services that deliver results.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <p><a href="index.html#services">Web Development</a></p>
+                    <p><a href="index.html#services">E-commerce</a></p>
+                    <p><a href="index.html#services">SEO Optimization</a></p>
+                    <p><a href="affiliate.html">Affiliate Program</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p><a href="mailto:contact@webdevpro.com">contact@webdevpro.com</a></p>
+                    <p><a href="tel:+15551234567">+1 (555) 123-4567</a></p>
+                </div>
+            </div>
+            
+            <div style="border-top: 1px solid #374151; padding-top: 2rem; margin-top: 2rem;">
+                <p>&copy; 2025 SorvexWebsite. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            if (navLinks.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Close menu when clicking on a link
+        navLinks.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuBtn.contains(e.target) && !navLinks.contains(e.target)) {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random position and animation
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                
+                // Random colors
+                const colors = ['#6366f1', '#8b5cf6', '#06d6a0', '#ff6b6b'];
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Custom URL validation
+        function isValidUrl(url) {
+            if (!url || url.trim() === '') return true; // Empty is valid (optional field)
+            
+            // Add protocol if missing
+            if (!url.match(/^https?:\/\//)) {
+                url = 'https://' + url;
+            }
+            
+            // Basic URL pattern
+            const urlPattern = /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/;
+            return urlPattern.test(url);
+        }
+
+        // Form validation
+        document.getElementById('affiliate-website').addEventListener('blur', function() {
+            const url = this.value.trim();
+            if (url && !isValidUrl(url)) {
+                this.setCustomValidity('Please enter a valid URL (e.g., yourwebsite.com or https://yourwebsite.com)');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+
+        // Affiliate Tracking System
+        class AffiliateTracker {
+            constructor() {
+                this.affiliateId = this.getAffiliateId();
+                this.leadData = this.getStoredLeadData();
+                this.initTracking();
+            }
+
+            getAffiliateId() {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get('ref') || localStorage.getItem('affiliate_id');
+            }
+
+            getStoredLeadData() {
+                return JSON.parse(localStorage.getItem('lead_data') || '{}');
+            }
+
+            initTracking() {
+                if (this.affiliateId) {
+                    localStorage.setItem('affiliate_id', this.affiliateId);
+                    this.trackPageView();
+                    this.trackFormInteractions();
+                }
+            }
+
+            trackPageView() {
+                this.sendTrackingData('page_view', {
+                    affiliate_id: this.affiliateId,
+                    page: window.location.pathname,
+                    timestamp: new Date().toISOString(),
+                    user_agent: navigator.userAgent
+                });
+            }
+
+            trackFormInteractions() {
+                // Prati kada korisnik počne da popunjava formu
+                const form = document.querySelector('#affiliate-form');
+                if (form) {
+                    form.addEventListener('focusin', (e) => {
+                        this.sendTrackingData('form_start', {
+                            affiliate_id: this.affiliateId,
+                            field: e.target.name,
+                            timestamp: new Date().toISOString()
+                        });
+                    });
+                }
+            }
+
+            trackLeadSubmission(leadData) {
+                const leadId = 'LEAD_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                
+                const trackingData = {
+                    lead_id: leadId,
+                    affiliate_id: this.affiliateId,
+                    lead_data: leadData,
+                    timestamp: new Date().toISOString(),
+                    status: 'pending',
+                    conversion_value: 0
+                };
+
+                // Sačuvaj lokalno
+                localStorage.setItem('lead_data', JSON.stringify(trackingData));
+                
+                // Pošalji na server
+                this.sendTrackingData('lead_submitted', trackingData);
+                
+                return leadId;
+            }
+
+            markLeadAsConverted(leadId, conversionValue) {
+                this.sendTrackingData('lead_converted', {
+                    lead_id: leadId,
+                    affiliate_id: this.affiliateId,
+                    conversion_value: conversionValue,
+                    commission: conversionValue * 0.20, // 20% komisija
+                    timestamp: new Date().toISOString()
+                });
+            }
+
+            sendTrackingData(eventType, data) {
+                // Simulacija slanja na server
+                console.log('Tracking Event:', eventType, data);
+                
+                // U stvarnoj implementaciji bi ovde bio fetch request
+                fetch('/api/affiliate-tracking', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        event_type: eventType,
+                        data: data
+                    })
+                }).catch(error => {
+                    console.log('Tracking error (simulated):', error);
+                });
+            }
+        }
+
+        // Initialize affiliate tracking
+        const affiliateTracker = new AffiliateTracker();
+
+        // Mouse trail effect
+        function createMouseTrail() {
+            let mouseX = 0, mouseY = 0;
+            let trailElements = [];
+            
+            // Function to create trail element
+            function createTrail(x, y) {
+                const trail = document.createElement('div');
+                trail.className = 'mouse-trail';
+                trail.style.left = x - 10 + 'px';
+                trail.style.top = y - 10 + 'px';
+                
+                document.body.appendChild(trail);
+                trailElements.push(trail);
+                
+                // Remove old trails (optimized for mobile)
+                const maxTrails = window.innerWidth <= 768 ? 5 : 10;
+                if (trailElements.length > maxTrails) {
+                    const oldTrail = trailElements.shift();
+                    if (oldTrail && oldTrail.parentNode) {
+                        oldTrail.parentNode.removeChild(oldTrail);
+                    }
+                }
+                
+                // Auto remove after animation
+                setTimeout(() => {
+                    if (trail.parentNode) {
+                        trail.parentNode.removeChild(trail);
+                    }
+                }, 600);
+            }
+            
+            // Mouse move event (desktop)
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                createTrail(mouseX, mouseY);
+            });
+            
+            // Touch move event (mobile)
+            document.addEventListener('touchmove', (e) => {
+                const touch = e.touches[0];
+                mouseX = touch.clientX;
+                mouseY = touch.clientY;
+                createTrail(mouseX, mouseY);
+            }, { passive: true });
+        }
+
+        // Initialize mouse trail
+        createMouseTrail();
+
+        // Initialize GSAP
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(10, 10, 10, 0.95)';
+                header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.3)';
+            } else {
+                header.style.background = 'rgba(10, 10, 10, 0.8)';
+                header.style.boxShadow = '0 10px 25px rgba(0,0,0,0.2)';
+            }
+        });
+
+        // Hero animations
+        const heroTimeline = gsap.timeline();
+        
+        heroTimeline
+            .from('.hero h1', {
+                duration: 1.2,
+                y: 50,
+                opacity: 0,
+                ease: 'power3.out'
+            })
+            .from('.hero p', {
+                duration: 0.8,
+                y: 30,
+                opacity: 0,
+                ease: 'power2.out'
+            }, '-=0.5')
+            .from('.btn-primary', {
+                duration: 0.8,
+                y: 30,
+                opacity: 0,
+                ease: 'power2.out'
+            }, '-=0.3');
+
+        // Affiliate section animations
+        gsap.set('.benefit-card, .stat-card', { opacity: 1, y: 0 });
+        
+        gsap.from('.benefit-card', {
+            scrollTrigger: {
+                trigger: '.benefits-grid',
+                start: 'top 80%',
+                end: 'bottom 20%',
+                toggleActions: 'play none none reverse'
+            },
+            duration: 0.8,
+            y: 50,
+            opacity: 0,
+            stagger: 0.15,
+            ease: 'power3.out'
+        });
+
+        gsap.from('.stat-card', {
+            scrollTrigger: {
+                trigger: '.dashboard-stats',
+                start: 'top 80%',
+                end: 'bottom 20%',
+                toggleActions: 'play none none reverse'
+            },
+            duration: 0.8,
+            y: 50,
+            opacity: 0,
+            stagger: 0.1,
+            ease: 'power3.out'
+        });
+
+        gsap.from('.affiliate-form-container', {
+            scrollTrigger: {
+                trigger: '.affiliate-content',
+                start: 'top 80%',
+                end: 'bottom 20%',
+                toggleActions: 'play none none reverse'
+            },
+            duration: 1,
+            x: 50,
+            opacity: 0,
+            ease: 'power3.out'
+        });
+
+        // Affiliate form submission
+        document.querySelector('.affiliate-signup-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const website = formData.get('website');
+            const experience = formData.get('experience');
+            
+            // Track lead submission
+            const leadData = {
+                name: name,
+                email: email,
+                phone: formData.get('phone'),
+                website: website,
+                social: formData.get('social'),
+                experience: experience,
+                message: formData.get('message')
+            };
+            
+            const leadId = affiliateTracker.trackLeadSubmission(leadData);
+            
+            // Register affiliate on server
+            try {
+                const API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:3000' : 'https://YOUR-RAILWAY-APP-NAME.railway.app';
+                
+                const response = await fetch(`${API_BASE}/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: 'auto-generated'
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Affiliate registered:', data);
+                } else {
+                    console.error('Registration failed:', await response.text());
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+            }
+            
+            // Animate button
+            const button = this.querySelector('.affiliate-submit');
+            gsap.to(button, {
+                duration: 0.3,
+                scale: 0.95,
+                yoyo: true,
+                repeat: 1,
+                ease: 'power2.inOut'
+            });
+            
+            // Show success notification
+            setTimeout(() => {
+                showAffiliateSuccessNotification(name, experience, leadId);
+                this.reset();
+                
+                // Save affiliate status to localStorage and cookies
+                const affiliateData = {
+                    isAffiliate: true,
+                    userId: leadId.split('_')[1],
+                    email: name,
+                    discountCode: 'AUTO' + Math.random().toString(36).substr(2, 6).toUpperCase(),
+                    joinedAt: new Date().toISOString()
+                };
+                
+                // Save to localStorage
+                localStorage.setItem('affiliateData', JSON.stringify(affiliateData));
+                
+                // Save to cookie (expires in 1 year)
+                const cookieValue = encodeURIComponent(JSON.stringify(affiliateData));
+                document.cookie = `affiliate_user=${cookieValue}; expires=${new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
+                
+                // Redirect to dashboard with user data after 3 seconds
+                setTimeout(() => {
+                    const dashboardUrl = `affiliate-dashboard.html?user_id=${affiliateData.userId}&email=${encodeURIComponent(affiliateData.email)}&discount_code=${affiliateData.discountCode}`;
+                    window.location.href = dashboardUrl;
+                }, 3000);
+            }, 600);
+        });
+
+        // Show affiliate success notification
+        function showAffiliateSuccessNotification(name, experience, leadId) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'success-notification show';
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #10b981, #059669);
+                color: white;
+                padding: 20px 30px;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+                z-index: 10000;
+                opacity: 0;
+                transform: translateX(100%);
+                transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                max-width: 350px;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            `;
+            
+            // Customize message based on experience
+            let experienceText = '';
+            if (experience) {
+                switch(experience) {
+                    case 'beginner':
+                        experienceText = ' (Beginner)';
+                        break;
+                    case 'intermediate':
+                        experienceText = ' (Intermediate)';
+                        break;
+                    case 'advanced':
+                        experienceText = ' (Advanced)';
+                        break;
+                    case 'expert':
+                        experienceText = ' (Expert)';
+                        break;
+                }
+            }
+            
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="font-size: 1.5rem; animation: bounce 1s infinite;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div>
+                        <h4 style="margin: 0 0 5px 0; font-size: 1.1rem; font-weight: 600;">Lead Submitted Successfully!</h4>
+                        <p style="margin: 0 0 3px 0; font-size: 0.9rem; opacity: 0.9;">Thanks${name ? ` ${name}` : ''}!${experienceText}</p>
+                        <p style="margin: 0; font-size: 0.8rem; opacity: 0.8; font-weight: 600;">Lead ID: ${leadId}</p>
+                        <p style="margin: 3px 0 0 0; font-size: 0.8rem; opacity: 0.9;">We'll contact you within 24 hours.</p>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Hide notification after 5 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    notification.remove();
+                }, 500);
+            }, 5000);
+        }
+
+        // Initialize particles
+        createParticles();
+
+        // Check if user is already an affiliate
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAffiliateStatus();
+        });
+
+        function checkAffiliateStatus() {
+            // Check localStorage for affiliate status
+            const affiliateData = localStorage.getItem('affiliateData');
+            
+            if (affiliateData) {
+                try {
+                    const data = JSON.parse(affiliateData);
+                    if (data.isAffiliate && data.userId) {
+                        // User is already an affiliate, redirect to dashboard
+                        window.location.href = 'affiliate-dashboard.html';
+                        return;
+                    }
+                } catch (error) {
+                    console.error('Error parsing affiliate data:', error);
+                }
+            }
+
+            // Check cookies for affiliate status
+            const affiliateCookie = getCookie('affiliate_user');
+            if (affiliateCookie) {
+                try {
+                    const cookieData = JSON.parse(decodeURIComponent(affiliateCookie));
+                    if (cookieData.isAffiliate && cookieData.userId) {
+                        // User is already an affiliate, redirect to dashboard
+                        window.location.href = 'affiliate-dashboard.html';
+                        return;
+                    }
+                } catch (error) {
+                    console.error('Error parsing affiliate cookie:', error);
+                }
+            }
+
+            // If not an affiliate, show the join form (default behavior)
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
+
+        // Console message
+        console.log('🚀 SorvexWebsite Affiliate Program');
+        console.log('💰 Earn up to 30% commission');
+        console.log('📧 Contact: contact@webdevpro.com');
+        console.log('⚡ Join now and start earning!');
+    </script>
+</body>
+</html>
