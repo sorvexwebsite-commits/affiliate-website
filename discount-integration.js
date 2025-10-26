@@ -135,33 +135,15 @@ class DiscountIntegration {
 
             // Get discount code if provided
             const discountCode = data['discount-code'] || null;
-            const amount = this.getFormValue(data);
-
-            // Send purchase to backend
-            const purchaseData = {
-                amount: amount,
-                customerEmail: data.email,
-                discountCode: discountCode
-            };
-
-            const response = await fetch(`${this.apiBase}/purchase`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(purchaseData)
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                console.log('✅ Purchase tracked:', result);
-                
-                // Show success message with discount info
-                this.showPurchaseSuccess(result);
-            } else {
-                console.error('❌ Purchase tracking failed:', await response.text());
-                this.showPurchaseError();
-            }
+            
+            // IMPORTANT: We DO NOT automatically register sales here!
+            // Admin will manually confirm sales in admin panel after negotiating with customer.
+            // This form is just for inquiry/submission.
+            
+            console.log('📝 Inquiry submitted with discount code:', discountCode);
+            
+            // Show simple success message
+            this.showInquirySuccess();
 
         } catch (error) {
             console.error('Error tracking purchase:', error);
@@ -182,6 +164,27 @@ class DiscountIntegration {
         
         // Default amount for contact forms
         return 225; // Growth Pro default
+    }
+
+    showInquirySuccess() {
+        // Show simple success notification for inquiry submission
+        const notification = document.getElementById('successNotification');
+        if (notification) {
+            notification.style.opacity = '1';
+            notification.style.transform = 'translateX(0)';
+            notification.classList.add('show');
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    // Reset form after successful submission
+                    document.getElementById('contact-form').reset();
+                }, 500);
+            }, 5000);
+        }
     }
 
     showPurchaseSuccess(purchaseResult) {

@@ -43,9 +43,14 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 100vh;
+            min-height: 100%;
             z-index: -1;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        }
+
+        body {
+            min-height: 100vh;
         }
 
         .container {
@@ -104,6 +109,50 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
             border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 30px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .mobile-menu-btn span {
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+            box-shadow: 0 2px 5px rgba(99, 102, 241, 0.3);
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
         }
 
 
@@ -368,27 +417,476 @@
             border: 1px solid rgba(239, 68, 68, 0.2);
         }
 
-        /* Mobile Responsive */
+        /* Table wrapper - desktop only */
+        .table-wrapper {
+            overflow: visible;
+        }
+
+        /* Desktop - hide mobile cards, show table */
+        .sales-mobile-cards {
+            display: none;
+        }
+
+        .sales-table {
+            display: table;
+        }
+
+        /* Hide Total Recruits on desktop */
+        .stat-card:nth-child(3) {
+            display: none;
+        }
         @media (max-width: 768px) {
-            .dashboard-header h1 {
-                font-size: 2rem;
+            /* Container adjustments */
+            .container {
+                padding: 0 1rem;
             }
 
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
+            /* Header mobile */
+            .header {
+                padding: 0.75rem 0;
             }
 
-            .stat-card {
-                padding: 1.5rem;
-            }
-
-            .discount-code-text {
-                font-size: 1.5rem;
+            .logo {
+                font-size: 1.2rem;
             }
 
             .nav-links {
                 display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+                z-index: 1001;
+                width: 25px;
+                height: 25px;
+            }
+
+            .mobile-menu-btn span {
+                height: 2px;
+            }
+
+            /* Mobile menu active state */
+            .nav-links.active {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: linear-gradient(135deg, rgba(5, 5, 15, 0.98) 0%, rgba(15, 15, 35, 0.95) 50%, rgba(25, 25, 45, 0.92) 100%);
+                backdrop-filter: blur(25px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 1.5rem;
+                z-index: 1000;
+                padding: 3rem 2rem;
+                border-right: 2px solid rgba(99, 102, 241, 0.3);
+                box-shadow: inset -10px 0 30px rgba(99, 102, 241, 0.1);
+            }
+
+            .nav-links.active li {
+                text-align: center;
+                width: 100%;
+                opacity: 0;
+                transform: translateX(-80px) scale(0.8);
+                animation: slideInFromLeft 0.8s ease forwards;
+            }
+
+            .nav-links.active li:nth-child(1) { animation-delay: 0.1s; }
+
+            .nav-links.active a {
+                padding: 1.5rem 2.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+                border-radius: 20px;
+                background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%);
+                border: 2px solid rgba(99, 102, 241, 0.15);
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                font-size: 1.3rem;
+                font-weight: 600;
+                width: 100%;
+                text-align: center;
+                backdrop-filter: blur(10px);
+            }
+
+            .nav-links.active a:hover {
+                background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+                transform: translateY(-5px) scale(1.03);
+                box-shadow: 0 15px 35px rgba(99, 102, 241, 0.25);
+                border-color: rgba(99, 102, 241, 0.3);
+            }
+
+            @keyframes slideInFromLeft {
+                to {
+                    opacity: 1;
+                    transform: translateX(0) scale(1);
+                }
+            }
+
+            /* Dashboard mobile */
+            .dashboard {
+                padding-top: 100px;
+            }
+
+            .dashboard-header {
+                margin-bottom: 2rem;
+            }
+
+            .dashboard-header h1 {
+                font-size: 1.8rem;
+                line-height: 1.2;
+                margin-bottom: 0.75rem;
+            }
+
+            .dashboard-header p {
+                font-size: 1rem;
+                line-height: 1.4;
+            }
+
+            /* Stats grid mobile - only 2 cards now */
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+                margin-bottom: 2rem;
+            }
+
+            /* Hide Total Recruits on mobile too */
+            .stat-card:nth-child(3) {
+                display: none;
+            }
+
+            .stat-card {
+                padding: 1rem;
+                border-radius: 15px;
+            }
+
+            .stat-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+                margin-bottom: 0.25rem;
+            }
+
+            .stat-label {
+                font-size: 0.85rem;
+                line-height: 1.2;
+            }
+
+            /* Discount section mobile */
+            .discount-section {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+                border-radius: 15px;
+            }
+
+            .discount-section h3 {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+
+            .discount-code {
+                padding: 1rem;
+                border-radius: 12px;
+                margin-bottom: 1rem;
+            }
+
+            .discount-code-text {
+                font-size: 1.3rem;
+                margin-bottom: 0.5rem;
+                word-break: break-all;
+            }
+
+            .discount-code-label {
+                font-size: 0.85rem;
+                line-height: 1.3;
+            }
+
+            /* Buttons mobile */
+            .copy-btn, .share-btn {
+                width: 100%;
+                padding: 0.875rem 1rem;
+                font-size: 0.9rem;
+                margin: 0.5rem 0;
+                border-radius: 8px;
+                min-height: 44px;
+            }
+
+            .copy-btn {
+                margin-right: 0;
+            }
+
+            /* Recent sales mobile */
+            .recent-sales {
+                padding: 1.5rem;
+                border-radius: 15px;
+            }
+
+            .recent-sales h3 {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+
+            /* Mobile - transform table into card layout */
+            .sales-table {
+                display: none; /* Hide table on mobile */
+            }
+
+            /* Mobile cards layout */
+            .sales-mobile-cards {
+                display: block;
+            }
+
+            .sales-card {
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 15px;
+                padding: 1.25rem;
+                margin-bottom: 1rem;
+                backdrop-filter: blur(10px);
+                transition: all 0.3s ease;
+            }
+
+            .sales-card:hover {
+                background: rgba(255, 255, 255, 0.08);
+                border-color: rgba(99, 102, 241, 0.3);
+                transform: translateY(-2px);
+            }
+
+            .sales-card-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1rem;
+                padding-bottom: 0.75rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .sales-card-customer {
+                font-weight: 600;
+                color: var(--text);
+                font-size: 1rem;
+                flex: 1;
+            }
+
+            .sales-card-amount {
+                font-weight: 700;
+                color: var(--accent);
+                font-size: 1.1rem;
+                background: rgba(6, 214, 160, 0.1);
+                padding: 0.5rem 0.75rem;
+                border-radius: 8px;
+                border: 1px solid rgba(6, 214, 160, 0.2);
+            }
+
+            .sales-card-details {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.75rem;
+                font-size: 0.9rem;
+            }
+
+            .sales-card-detail {
+                display: flex;
+                flex-direction: column;
+                gap: 0.25rem;
+                padding: 0.75rem;
+                background: rgba(255, 255, 255, 0.03);
+                border-radius: 10px;
+                border: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .sales-card-detail-label {
+                color: var(--text-light);
+                font-size: 0.8rem;
+                font-weight: 500;
+                opacity: 0.8;
+            }
+
+            .sales-card-detail-value {
+                font-weight: 600;
+                color: var(--text);
+                font-size: 0.95rem;
+            }
+
+            /* Special styling for different detail types */
+            .sales-card-detail:nth-child(1) .sales-card-detail-value {
+                color: var(--primary);
+            }
+
+            .sales-card-detail:nth-child(2) .sales-card-detail-value {
+                color: var(--secondary);
+            }
+
+            .sales-card-detail:nth-child(3) .sales-card-detail-value {
+                color: var(--accent);
+            }
+
+            /* Table wrapper - no scroll needed */
+            .table-wrapper {
+                overflow: visible;
+                margin: 0;
+                padding: 0;
+            }
+
+            /* Login form mobile */
+            .login-form {
+                margin: 2rem 1rem;
+                padding: 1.5rem;
+                border-radius: 15px;
+            }
+
+            .login-form h2 {
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .form-group {
+                margin-bottom: 1.25rem;
+            }
+
+            .form-group label {
+                font-size: 0.9rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .form-group input {
+                padding: 0.875rem;
+                font-size: 16px; /* Prevents zoom on iOS */
+                border-radius: 8px;
+                min-height: 44px;
+            }
+
+            .login-btn {
+                padding: 0.875rem;
+                font-size: 1rem;
+                border-radius: 8px;
+                min-height: 44px;
+            }
+
+            /* Message mobile */
+            .message {
+                padding: 0.875rem;
+                border-radius: 8px;
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+
+            /* Touch-friendly interactions */
+            .stat-card:hover,
+            .copy-btn:hover,
+            .share-btn:hover,
+            .login-btn:hover {
+                transform: none;
+            }
+
+            .stat-card:active {
+                transform: scale(0.98);
+            }
+
+            .copy-btn:active,
+            .share-btn:active,
+            .login-btn:active {
+                transform: scale(0.95);
+            }
+        }
+
+        /* Extra small mobile */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 0.75rem;
+            }
+
+            .dashboard {
+                padding-top: 90px;
+            }
+
+            .dashboard-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            /* Hide Total Recruits on extra small mobile too */
+            .stat-card:nth-child(3) {
+                display: none;
+            }
+
+            .stat-card {
+                padding: 0.875rem;
+            }
+
+            .stat-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+
+            .stat-number {
+                font-size: 1.3rem;
+            }
+
+            .stat-label {
+                font-size: 0.8rem;
+            }
+
+            .discount-section,
+            .recent-sales,
+            .login-form {
+                padding: 1.25rem;
+            }
+
+            .discount-code-text {
+                font-size: 1.1rem;
+            }
+
+            /* Extra small mobile cards adjustments */
+            .sales-card {
+                padding: 1rem;
+                margin-bottom: 0.75rem;
+                border-radius: 12px;
+            }
+
+            .sales-card-header {
+                margin-bottom: 0.75rem;
+                padding-bottom: 0.5rem;
+            }
+
+            .sales-card-customer {
+                font-size: 0.9rem;
+            }
+
+            .sales-card-amount {
+                font-size: 1rem;
+                padding: 0.4rem 0.6rem;
+            }
+
+            .sales-card-details {
+                gap: 0.5rem;
+                font-size: 0.85rem;
+            }
+
+            .sales-card-detail {
+                padding: 0.6rem;
+                border-radius: 8px;
+            }
+
+            .sales-card-detail-label {
+                font-size: 0.75rem;
+            }
+
+            .sales-card-detail-value {
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -405,7 +903,14 @@
                     <i class="fas fa-code"></i> SorvexWebsite
                 </div>
                 
-                <ul class="nav-links">
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <ul class="nav-links" id="navLinks">
                     <li><a href="index.html">Home</a></li>
                 </ul>
                 
@@ -499,22 +1004,35 @@
                 <!-- Recent Sales -->
                 <div class="recent-sales">
                     <h3><i class="fas fa-chart-line"></i> Recent Sales</h3>
-                    <table class="sales-table">
-                        <thead>
-                            <tr>
-                                <th>Customer</th>
-                                <th>Amount</th>
-                                <th>Discount</th>
-                                <th>Commission</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody id="salesTableBody">
-                            <tr>
-                                <td colspan="5" style="text-align: center; color: var(--text-light);">No sales yet</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    
+                    <!-- Desktop Table -->
+                    <div class="table-wrapper">
+                        <table class="sales-table">
+                            <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Amount</th>
+                                    <th>Discount</th>
+                                    <th>Commission</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="salesTableBody">
+                                <tr>
+                                    <td colspan="5" style="text-align: center; color: var(--text-light);">No sales yet</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Mobile Cards -->
+                    <div class="sales-mobile-cards" id="salesMobileCards">
+                        <div class="sales-card">
+                            <div class="sales-card-header">
+                                <div class="sales-card-customer">No sales yet</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -527,6 +1045,9 @@
 
         // Check if user is logged in
         document.addEventListener('DOMContentLoaded', () => {
+            // Initialize mobile menu
+            initMobileMenu();
+            
             // Generate discount code when dashboard loads
             setTimeout(() => {
                 generateDiscountCode();
@@ -729,13 +1250,28 @@
 
         function updateSalesTable(sales) {
             const tbody = document.getElementById('salesTableBody');
+            const mobileCards = document.getElementById('salesMobileCards');
+            
+            // Clear both table and mobile cards
             tbody.innerHTML = '';
+            mobileCards.innerHTML = '';
 
             if (sales.length === 0) {
+                // Update table
                 tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-light);">No sales yet</td></tr>';
+                
+                // Update mobile cards
+                mobileCards.innerHTML = `
+                    <div class="sales-card">
+                        <div class="sales-card-header">
+                            <div class="sales-card-customer">No sales yet</div>
+                        </div>
+                    </div>
+                `;
                 return;
             }
 
+            // Update table
             sales.forEach(sale => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -746,6 +1282,33 @@
                     <td>${new Date(sale.createdAt).toLocaleDateString()}</td>
                 `;
                 tbody.appendChild(row);
+            });
+
+            // Update mobile cards
+            sales.forEach(sale => {
+                const card = document.createElement('div');
+                card.className = 'sales-card';
+                card.innerHTML = `
+                    <div class="sales-card-header">
+                        <div class="sales-card-customer">${sale.customerEmail}</div>
+                        <div class="sales-card-amount">$${sale.amount.toFixed(2)}</div>
+                    </div>
+                    <div class="sales-card-details">
+                        <div class="sales-card-detail">
+                            <div class="sales-card-detail-label">Discount</div>
+                            <div class="sales-card-detail-value">$${sale.discountAmount.toFixed(2)}</div>
+                        </div>
+                        <div class="sales-card-detail">
+                            <div class="sales-card-detail-label">Commission</div>
+                            <div class="sales-card-detail-value">$${sale.affiliateCommission.toFixed(2)}</div>
+                        </div>
+                        <div class="sales-card-detail">
+                            <div class="sales-card-detail-label">Date</div>
+                            <div class="sales-card-detail-value">${new Date(sale.createdAt).toLocaleDateString()}</div>
+                        </div>
+                    </div>
+                `;
+                mobileCards.appendChild(card);
             });
         }
 
@@ -844,6 +1407,46 @@
             setTimeout(() => {
                 messageDiv.style.display = 'none';
             }, 5000);
+        }
+
+        // Mobile menu functionality
+        function initMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.getElementById('navLinks');
+
+            if (mobileMenuBtn && navLinks) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenuBtn.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    
+                    // Prevent body scroll when menu is open
+                    if (navLinks.classList.contains('active')) {
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        document.body.style.overflow = '';
+                    }
+                });
+
+                // Close mobile menu when clicking on any nav link
+                const navLinkElements = navLinks.querySelectorAll('a');
+                navLinkElements.forEach(link => {
+                    link.addEventListener('click', () => {
+                        // Close mobile menu
+                        mobileMenuBtn.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        document.body.style.overflow = '';
+                    });
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!mobileMenuBtn.contains(e.target) && !navLinks.contains(e.target)) {
+                        mobileMenuBtn.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+            }
         }
     </script>
 </body>
