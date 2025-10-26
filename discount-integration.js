@@ -2,7 +2,7 @@
 class DiscountIntegration {
     constructor() {
         console.log('🏗️ DiscountIntegration constructor called');
-        this.apiBase = window.location.hostname === 'localhost' ? 'http://localhost:3000' : 'https://YOUR-RAILWAY-APP-NAME.railway.app';
+        this.apiBase = window.location.hostname === 'localhost' ? 'http://localhost:3000' : 'https://affiliate-website-wrzn.onrender.com';
         console.log('🌐 API Base set to:', this.apiBase);
         this.discountData = null;
         this.init();

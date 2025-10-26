@@ -1,7 +1,7 @@
 // Frontend integration for affiliate system
 class AffiliateIntegration {
     constructor() {
-        this.apiBase = window.location.hostname === 'localhost' ? 'http://localhost:3000' : 'https://YOUR-RAILWAY-APP-NAME.railway.app';
+        this.apiBase = window.location.hostname === 'localhost' ? 'http://localhost:3000' : 'https://affiliate-website-wrzn.onrender.com';
         this.init();
     }
 
