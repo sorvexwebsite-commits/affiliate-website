@@ -30,14 +30,9 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: [
-        'http://localhost:8000', 
-        'http://127.0.0.1:8000', 
-        'http://localhost:3000',
-        'https://sorvexwebsite.com',
-        'https://www.sorvexwebsite.com',
-        'https://affiliate-website-wrzn.onrender.com'
-    ]
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Serve static files from the current directory
