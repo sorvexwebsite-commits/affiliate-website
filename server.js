@@ -37,8 +37,7 @@ app.use(cors({
         'https://sorvexwebsite.com',
         'https://www.sorvexwebsite.com',
         'https://affiliate-website-wrzn.onrender.com'
-    ],
-    credentials: true
+    ]
 }));
 
 // Serve static files from the current directory

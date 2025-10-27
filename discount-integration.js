@@ -74,7 +74,6 @@ class DiscountIntegration {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include',
                 body: JSON.stringify(requestBody)
             });
 
@@ -304,7 +303,6 @@ class DiscountIntegration {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include',
                 body: JSON.stringify({
                     code: code,
                     amount: 1000
@@ -342,7 +340,6 @@ class DiscountIntegration {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include',
                 body: JSON.stringify({ amount, customerEmail, discountCode })
             });
 
@@ -368,7 +365,6 @@ class DiscountIntegration {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include',
                 body: JSON.stringify({ amount, customerEmail, discountCode })
             });
 
