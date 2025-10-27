@@ -142,6 +142,25 @@ class DiscountIntegration {
             
             console.log('📝 Inquiry submitted with discount code:', discountCode);
             
+            // Send email notification via EmailJS
+            try {
+                await emailjs.send(
+                    'service_0is6sol',  // Service ID
+                    'template_ly5sake', // Template ID
+                    {
+                        from_name: data.name || 'Unknown',
+                        from_email: data.email,
+                        from_phone: data.phone || 'Not provided',
+                        message: data.message || 'No message',
+                        discount_code: discountCode || 'None'
+                    }
+                );
+                console.log('✅ Email notification sent successfully');
+            } catch (emailError) {
+                console.error('❌ Email sending failed:', emailError);
+                // Continue anyway - still show success to user
+            }
+            
             // Show simple success message
             this.showInquirySuccess();
 

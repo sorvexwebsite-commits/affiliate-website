@@ -1214,6 +1214,14 @@
             }
         }
 
+        // Auto-refresh dashboard data every 30 seconds to show new sales
+        setInterval(() => {
+            if (currentUser) {
+                console.log('🔄 Auto-refreshing dashboard data...');
+                loadDashboardData();
+            }
+        }, 30000); // Refresh every 30 seconds
+
         function showEmptyDashboard() {
             // Update dashboard with empty data for new user
             document.getElementById('totalEarnings').textContent = '$0.00';

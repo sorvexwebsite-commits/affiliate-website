@@ -15,6 +15,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("v0IMk_JAHk1oH3cz4");
+        })();
+    </script>
+    
     <style>
         * {
             margin: 0;
@@ -1716,7 +1724,7 @@
     <!-- Features Section -->
     <section id="features" class="features">
         <div class="container">
-            <h2 class="section-title">Why Choose Me?</h2>
+            <h2 class="section-title">Why Choose Us?</h2>
             <p class="section-subtitle">Professional web development services with guaranteed results</p>
             
             <div class="features-grid">
@@ -2047,14 +2055,17 @@
             }
         });
 
-        // Close menu when clicking on a link
-        navLinks.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
+        // Close mobile menu when clicking on any nav link
+        const navLinkElements = navLinks.querySelectorAll('a');
+        navLinkElements.forEach(link => {
+            link.addEventListener('click', () => {
+                // Close mobile menu
                 mobileMenuBtn.classList.remove('active');
                 navLinks.classList.remove('active');
                 document.body.style.overflow = '';
-            }
+            });
         });
+
 
         // Close menu when clicking outside
         document.addEventListener('click', (e) => {
