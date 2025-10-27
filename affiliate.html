@@ -2006,7 +2006,8 @@
                 }
             } catch (error) {
                 console.error('❌ Registration error:', error);
-                alert('Error connecting to server. Please try again.');
+                console.error('❌ Error details:', error.message, error.stack);
+                alert('Error connecting to server. Please try again.\n\nError: ' + error.message);
             }
         });
 
