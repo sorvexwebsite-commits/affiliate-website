@@ -128,6 +128,8 @@ class DiscountIntegration {
     }
 
     async handleFormSubmission(event, formType) {
+        event.preventDefault(); // Prevent form from submitting normally
+        
         try {
             // Get form data
             const formData = new FormData(event.target);
