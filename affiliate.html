@@ -1953,7 +1953,7 @@
             
             // Register affiliate on server
             try {
-                const API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:3000' : 'https://YOUR-RAILWAY-APP-NAME.railway.app';
+                const API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:3000' : 'https://affiliate-website-wrzn.onrender.com';
                 
                 const response = await fetch(`${API_BASE}/register`, {
                     method: 'POST',
@@ -1968,51 +1968,46 @@
                 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log('Affiliate registered:', data);
+                    console.log('✅ Affiliate registered:', data);
+                    
+                    // Use REAL data from server
+                    const affiliateData = {
+                        isAffiliate: true,
+                        userId: data.user.id,
+                        email: data.user.email,
+                        discountCode: data.user.discountCode || data.user.discount_code,
+                        joinedAt: new Date().toISOString()
+                    };
+                    
+                    console.log('📝 Affiliate data:', affiliateData);
+                    
+                    // Save to localStorage
+                    localStorage.setItem('affiliateData', JSON.stringify(affiliateData));
+                    
+                    // Save to cookie
+                    const cookieValue = encodeURIComponent(JSON.stringify(affiliateData));
+                    document.cookie = `affiliate_user=${cookieValue}; expires=${new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
+                    
+                    // Reset form
+                    this.reset();
+                    
+                    // Show success
+                    alert(`✅ Registration Successful!\n\nYour Discount Code: ${affiliateData.discountCode}\n\nRedirecting to dashboard...`);
+                    
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = 'affiliate-dashboard.html';
+                    }, 2000);
+                    
                 } else {
-                    console.error('Registration failed:', await response.text());
+                    const error = await response.text();
+                    console.error('❌ Registration failed:', error);
+                    alert('Registration failed: ' + error);
                 }
             } catch (error) {
-                console.error('Registration error:', error);
+                console.error('❌ Registration error:', error);
+                alert('Error connecting to server. Please try again.');
             }
-            
-            // Animate button
-            const button = this.querySelector('.affiliate-submit');
-            gsap.to(button, {
-                duration: 0.3,
-                scale: 0.95,
-                yoyo: true,
-                repeat: 1,
-                ease: 'power2.inOut'
-            });
-            
-            // Show success notification
-            setTimeout(() => {
-                showAffiliateSuccessNotification(name, experience, leadId);
-                this.reset();
-                
-                // Save affiliate status to localStorage and cookies
-                const affiliateData = {
-                    isAffiliate: true,
-                    userId: leadId.split('_')[1],
-                    email: name,
-                    discountCode: 'AUTO' + Math.random().toString(36).substr(2, 6).toUpperCase(),
-                    joinedAt: new Date().toISOString()
-                };
-                
-                // Save to localStorage
-                localStorage.setItem('affiliateData', JSON.stringify(affiliateData));
-                
-                // Save to cookie (expires in 1 year)
-                const cookieValue = encodeURIComponent(JSON.stringify(affiliateData));
-                document.cookie = `affiliate_user=${cookieValue}; expires=${new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
-                
-                // Redirect to dashboard with user data after 3 seconds
-                setTimeout(() => {
-                    const dashboardUrl = `affiliate-dashboard.html?user_id=${affiliateData.userId}&email=${encodeURIComponent(affiliateData.email)}&discount_code=${affiliateData.discountCode}`;
-                    window.location.href = dashboardUrl;
-                }, 3000);
-            }, 600);
         });
 
         // Show affiliate success notification

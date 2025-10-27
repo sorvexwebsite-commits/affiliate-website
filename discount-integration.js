@@ -153,6 +153,7 @@ class DiscountIntegration {
                         from_name: data.name || 'Unknown',
                         from_email: data.email,
                         from_phone: data.phone || 'Not provided',
+                        package: data.package || 'Not specified',
                         message: data.message || 'No message',
                         discount_code: discountCode || 'None'
                     }
